@@ -25,7 +25,11 @@ export function formatDuration(minutes: number): string {
 }
 
 export function formatTime(date: Date): string {
-  return date.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
+  return date.toLocaleTimeString("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 }
 
 export function formatDateLong(date: Date): string {
