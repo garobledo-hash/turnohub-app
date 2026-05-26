@@ -76,22 +76,49 @@ export async function createAppointment(
     status?: AppointmentStatus;
   }
 ): Promise<Appointment> {
+
+  // VALIDAR SUPERPOSICIÓN
+  const { data: conflicts, error: conflictError } =
+    await supabase
+      .from("appointments")
+      .select("id, starts_at, end_at")
+      .eq("business_id", payload.business_id)
+      .in("status", [
+        "scheduled",
+        "confirmed",
+        "pending",
+      ])
+      .lt("starts_at", payload.end_at)
+      .gt("end_at", payload.starts_at);
+
+  if (conflictError) {
+    throw conflictError;
+  }
+
+  if (conflicts && conflicts.length > 0) {
+    throw new Error(
+      "Horario ocupado"
+    );
+  }
+
   const insert = {
     ...payload,
-    status: payload.status ?? "confirmed",
+    status:
+      payload.status ??
+      "confirmed",
   };
 
-  const { data, error } = await supabase
-    .from("appointments")
-    .insert(insert)
-    .select("*")
-    .single();
+  const { data, error } =
+    await supabase
+      .from("appointments")
+      .insert(insert)
+      .select("*")
+      .single();
 
   if (error) throw error;
 
   return data as Appointment;
 }
-
 export async function updateAppointmentStatus(
   id: string,
   status: AppointmentStatus
@@ -103,7 +130,6 @@ export async function updateAppointmentStatus(
 
   if (error) throw error;
 }
-
 export async function deleteAppointment(
   id: string
 ): Promise<void> {
