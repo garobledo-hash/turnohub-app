@@ -199,19 +199,19 @@ for (const range of dayHours) {
     );
 
     const overlaps = busy.some((b) => {
-      const bs = new Date(
-        b.starts_at
-      ).getTime();
+  const bs = new Date(
+    b.starts_at.replace(" ", "T")
+  );
 
-      const be = new Date(
-        b.end_at
-      ).getTime();
+  const be = new Date(
+    b.end_at.replace(" ", "T")
+  );
 
-      return (
-        cur.getTime() < be &&
-        slotEnd.getTime() > bs
-      );
-    });
+  return (
+    cur < be &&
+    slotEnd > bs
+  );
+});
 
     if (
       !overlaps &&
