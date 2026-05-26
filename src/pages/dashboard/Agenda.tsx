@@ -399,8 +399,13 @@ if (
           <ul className="space-y-2">
             {dayAppts.map((a) => {
               const svc = services.find((s) => s.id === a.service_id);
-              const start = new Date(getStart(a));
-              const end = new Date(getEnd(a));
+              const start = new Date(
+                    getStart(a).replace(" ", "T")
+                    );
+
+              const end = new Date(
+                    getEnd(a).replace(" ", "T")
+                    );
 
               return (
                 <li
