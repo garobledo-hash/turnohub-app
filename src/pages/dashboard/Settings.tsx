@@ -296,7 +296,9 @@ export default function SettingsPage() {
               <div key={weekday} className={`rounded-xl border p-4 transition ${isOpen ? "border-border bg-card/40" : "border-border/40 bg-card/20"}`}>
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-[140px]">
+                    <div className="shrink-0 mr-2">
                     <Switch checked={isOpen} onChange={(v) => onToggleDayClosed(weekday, !v)} />
+                    </div>
                     <span className="font-medium whitespace-nowrap">{label}</span>
                     {closed && <span className="text-[11px] px-2 h-5 rounded-full bg-destructive/10 text-destructive inline-flex items-center">Cerrado</span>}
                   </div>
