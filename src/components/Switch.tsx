@@ -23,14 +23,14 @@ export function Switch({ checked, onChange, label, tone = "primary", disabled }:
     >
       <span
         className={cn(
-          "relative h-6 w-11 rounded-full border transition-colors",
+          "relative h-6 w-12 rounded-full border transition-colors overflow-hidden",
           checked ? `${onColor} border-transparent` : "bg-secondary border-border",
         )}
       >
         <span
           className={cn(
             "absolute top-0.5 h-5 w-5 rounded-full bg-background shadow transition-transform",
-            checked ? "translate-x-[22px]" : "translate-x-0.5",
+            checked ? "translate-x-0.5" : "translate-x-[24px]",
           )}
         />
       </span>
