@@ -30,7 +30,7 @@ export function Switch({ checked, onChange, label, tone = "primary", disabled }:
         <span
           className={cn(
             "absolute top-0.5 h-5 w-5 rounded-full bg-background shadow transition-transform",
-            checked ? "translate-x-0.5" : "translate-x-[24px]",
+            checked ? "translate-x-[2px]" : "translate-x-[24px]",
           )}
         />
       </span>
