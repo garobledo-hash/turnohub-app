@@ -9,6 +9,7 @@ import { Field, TextInput } from "@/components/FormField";
 import { Copy, ExternalLink, Plus, Save, Scissors, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { uploadLogo } from "@/services/storage";
 
 export default function SettingsPage() {
   const { profile, refreshProfile } = useAuth();
@@ -247,9 +248,55 @@ export default function SettingsPage() {
           <Field label="WhatsApp" hint="Sólo números con código de país. Ej: 5491100000000">
             <TextInput value={form.whatsapp ?? ""} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} />
           </Field>
-          <Field label="Logo URL">
-            <TextInput value={form.logo_url ?? ""} onChange={(e) => setForm({ ...form, logo_url: e.target.value })} placeholder="https://..." />
-          </Field>
+          <Field label="Logo">
+  <div className="space-y-3">
+    <input
+      type="file"
+      accept="image/*"
+      onChange={async (e) => {
+        try {
+          if (!profile?.id) return;
+
+          const file = e.target.files?.[0];
+
+          if (!file) return;
+
+          const url = await uploadLogo(
+            profile.id,
+            file
+          );
+
+          setForm({
+            ...form,
+            logo_url: url,
+          });
+
+          toast.success(
+            "Logo subido"
+          );
+        } catch (err) {
+          console.error(err);
+
+          toast.error(
+            "No se pudo subir el logo"
+          );
+        }
+      }}
+      className="block w-full text-sm"
+    />
+
+    <TextInput
+      value={form.logo_url ?? ""}
+      onChange={(e) =>
+        setForm({
+          ...form,
+          logo_url: e.target.value,
+        })
+      }
+      placeholder="https://..."
+    />
+  </div>
+</Field>
           <Field label="Color de marca">
             <div className="flex gap-2">
               <input type="color" value={form.brand_color ?? "#C7F250"} onChange={(e) => setForm({ ...form, brand_color: e.target.value })} className="h-11 w-12 rounded-lg bg-secondary border border-border cursor-pointer" />
