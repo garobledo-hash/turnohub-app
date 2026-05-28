@@ -422,7 +422,7 @@ if (
               return (
                 <li
                   key={a.id}
-                  className={`flex items-center gap-3 rounded-xl border p-3 ${
+                  className={`flex flex-col sm:flex-row sm:items-center gap-3 ${
                     a.status === "cancelled"
                       ? "opacity-50 border-border"
                       : a.status === "completed"
