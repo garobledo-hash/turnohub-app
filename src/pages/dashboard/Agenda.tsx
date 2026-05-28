@@ -106,12 +106,13 @@ setBusinessHours(bh);
 
   const dayAppts = useMemo(() => {
     return appts
-      .filter((a) => sameDay(new Date(getStart(a)), selected))
       .filter((a) =>
-        filter === "all"
-          ? true
-          : a.status === "pending" || a.status === "confirmed"
-      )
+  filter === "all"
+    ? true
+    : a.status === "pending" ||
+      a.status === "confirmed" ||
+      a.status === "scheduled"
+    )
       .sort(
         (a, b) =>
           new Date(getStart(a)).getTime() - new Date(getStart(b)).getTime()
