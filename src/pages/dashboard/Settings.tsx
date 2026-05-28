@@ -310,12 +310,12 @@ export default function SettingsPage() {
                 {isOpen && (
                   <div className="mt-3 space-y-2">
                     {rows.filter((r) => !r.is_closed).map((row) => (
-                      <div key={row.id} className="flex items-center gap-2">
+                      <div key={row.id} className="flex flex-wrap items-center gap-2">
                         <input
                           type="time"
                           value={(row.start_time ?? "").slice(0, 5)}
                           onChange={(e) => onChangeHour(row, { start_time: e.target.value })}
-                          className="h-10 rounded-lg bg-secondary/60 border border-border px-3 text-sm focus:outline-none focus:border-primary/60"
+                          className="h-10 w-[120px] rounded-lg bg-secondary/60 border border-border px-3 text-sm focus:outline-none focus:border-primary/60"
                         />
                         <span className="text-muted-foreground">—</span>
                         <input
