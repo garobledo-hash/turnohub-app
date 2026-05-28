@@ -229,6 +229,10 @@ if (
   );
   return;
 }
+    if (start.getTime() < Date.now()) {
+       toast.error("No podés crear turnos en fechas u horarios pasados");
+       return;
+}
 
     try {
       await createAppointment({
