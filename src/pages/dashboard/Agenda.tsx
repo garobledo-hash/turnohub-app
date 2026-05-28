@@ -105,19 +105,26 @@ setBusinessHours(bh);
   );
 
   const dayAppts = useMemo(() => {
-    return appts
-      .filter((a) =>
-  filter === "all"
-    ? true
-    : a.status === "pending" ||
-      a.status === "confirmed" ||
-      a.status === "scheduled"
+  return appts
+    .filter((a) =>
+      sameDay(
+        new Date(getStart(a)),
+        selected
+      )
     )
-      .sort(
-        (a, b) =>
-          new Date(getStart(a)).getTime() - new Date(getStart(b)).getTime()
-      );
-  }, [appts, selected, filter]);
+    .filter((a) =>
+      filter === "all"
+        ? true
+        : a.status === "pending" ||
+          a.status === "confirmed" ||
+          a.status === "scheduled"
+    )
+    .sort(
+      (a, b) =>
+        new Date(getStart(a)).getTime() -
+        new Date(getStart(b)).getTime()
+    );
+}, [appts, selected, filter]);
 
   function countForDay(d: Date): number {
     return appts.filter(
